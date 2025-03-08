@@ -9,7 +9,7 @@ export default function Header() {
 	};
   
 	return (
-	  <div className="w-full fixed top-0 left-0 shadow-md p-4 flex justify-end space-x-4 z-50">
+	  <div className="w-full fixed top-0 left-0 p-4 flex justify-end space-x-4 z-50">
 		<button
 		  onClick={() => scrollToSection("omOss")}
 		  className=" bg-[#A4AC8F] hover:bg-[#717765] text-white font-bold py-2 px-4 rounded"

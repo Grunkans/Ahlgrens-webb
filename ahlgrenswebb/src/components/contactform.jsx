@@ -16,6 +16,9 @@ function ContactForm() {
     message: false,
   });
 
+  const [loading, setLoading] = useState(false);
+  const [isSent, setIsSent] = useState(false);
+
   const validateField = (name, value) => {
     switch (name) {
       case "name":
@@ -63,6 +66,9 @@ function ContactForm() {
       return;
     }
 
+	setLoading(true);
+    setIsSent(false);
+
     try {
       const response = await fetch("http://localhost:5000/send-email", {
         method: "POST",
@@ -71,8 +77,10 @@ function ContactForm() {
       });
 
       const result = await response.json();
+	  setLoading(false);
+
       if (result.success) {
-        alert("Meddelandet har skickats!");
+        setIsSent(true);
         setFormData({ name: "", phone: "", email: "", message: "" });
         setErrors({ name: false, phone: false, email: false, message: false });
       } else {
@@ -163,12 +171,10 @@ function ContactForm() {
           ></textarea>
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-[#A4AC8F] hover:bg-[#717765] text-white font-bold py-2 px-4 rounded focus:outline-none 
-          focus:shadow-outline mt-4">
-          Skicka
-        </button>
+        <button type="submit" className="w-full bg-[#A4AC8F] hover:bg-[#717765] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+  		disabled={loading}>
+  		{loading ? "Skickar..." : isSent ? "Skickat!" : "Skicka"}
+		</button>
       </form>
 
       
